@@ -1,0 +1,104 @@
+{include file="page/header" /}
+{include file="page/body_top" /}
+<div style="clear: both;"></div>
+<div class="body">
+    <div class="body-left">
+      {include file="page/menu_index" /}
+    </div>
+    <div class="body-content">
+
+      <!-- 热门站点开始 -->
+      <div class="part_1_wrapper">
+        <div class="part_1_title">
+          <h2>热门站点</h2>
+        </div>
+        <div class="part_1_content">
+          <ul>
+              {volist name='site_popular' id='v'}
+                <li>
+                    <img src="{$v.view_url}" width="16px" height="16px"> <a href="{$v.url}" target="_blank" class="counter" data-id="{$v.id}" data-type="1">{$v.title}</a>
+                </li>
+              {/volist}
+          </ul>
+        </div>
+      </div>
+      <!-- 热门站点结束 -->
+
+      <!-- 广告2开始 -->
+      <div class="part_wrapper" style="width: 98%; margin: 10px 0 10px 0;">
+          <script type="text/javascript">
+              (function() {
+                  var s = "_" + Math.random().toString(36).slice(2);
+                  document.write('<div style="" id="' + s + '"></div>');
+                  (window.slotbydup = window.slotbydup || []).push({
+                      id: "u3701166",
+                      container:  s
+                  });
+              })();
+          </script>
+          <!--<a href="http://item.jd.com/12136920525.html?extension_id=&utm_medium=zssc&jd_pop=92145277-b213-4d41-ac14-e9f9043b0ac6&utm_campaign=t_1000072652_102606744_3123&utm_source=static-alias-1.360buyimg.com&re_dcp=44R1iiMSVokuhP0PCsWACEKeC4zaW-nvhwkwZF1vE-F4PTdiKZ8bHnN_ju_XbarA_g3y7W5iPfIKbLR0&utm_term=92145277b2134d41ac14e9f9043b0ac6-p_3123&tagname=rb" target="_blank"><img src="{$Think.BASE_PATH}image/ad/index_ad_1.png" width="280px" height="90px"></a>&nbsp;&nbsp;&nbsp;-->
+          <!--<a href="http://mall.icbc.com.cn/products/pd_9000598959.jhtml" target="_blank"><img src="{$Think.BASE_PATH}image/ad/index_ad_4.png" width="280px" height="90px"></a>&nbsp;&nbsp;&nbsp;-->
+          <!--<a href="http://tzxy.sina.com.cn/" target="_blank"><img src="{$Think.BASE_PATH}image/ad/index_ad_3.png" width="280px" height="90px"></a>-->
+      </div>
+      <!-- 广告2结束 -->
+
+      <!-- 好站推荐开始 -->
+      <div class="part_wrapper" style="width: 560px;">
+        <div class="part_title_wrapper">
+          <span class="part_title">好站推荐</span>
+          <span class="more"><a href="{:url('/recommend')}">更多</a></span>
+        </div>
+        <div class="part_content" >
+          {volist name='site_recommend' id='v'}
+              <div class="line_wrapper" style="height: 180px">
+                  <div class="line_picture" style="width: 165px">
+                      <a href="{:url('/page',array('id'=>$v.id))}" ><img src="{$v.view_url}" width="150px" height="100px" style="border-radius:5px;"></a>
+                  </div>
+                  <div class="line_content" style="width: 370px;">
+                      <div class="line_content_title"><a href="{:url('/page',array('id'=>$v.id))}" >{$v.title}</a></div>
+                      <div class="line_content_body" style="height: 80px;">{$v.summary}</div>
+                      <div class="line_content_bottom">&nbsp;&nbsp;{$v.create_time}</div>
+                  </div>
+              </div>
+          {/volist}
+        </div>
+
+          <div style="float:left;margin-left:150px;border: 1px solid #ccc; height: 22px; line-height: 22px; width: 300px; text-align: center;"><a href="{:url('/recommend')}">更多</a></div>
+
+      </div>
+      <!-- 好站推荐结束 -->
+
+      <!-- 最新加入开始 -->
+      <div class="part_wrapper" style="width: 280px; margin-left:20px;">
+        <div class="part_title_wrapper">
+          <span class="part_title">最新加入</span>
+          <span class="more"><a href="{:url('/site_new')}">更多</a></span>
+        </div>
+        <div class="part_content" >
+          <ul>
+              {volist name='site_news' id='v'}
+              <li>
+                  <!--<img src="{$v.view_url}"> {$v.title}-->
+                  <div style="height: 20px;line-height: 20px;"><a href="{$v.url}" target="_blank" class="counter" data-id="{$v.id}" data-type="1" >{$v.title}</a></div>
+                  <div style="font-size: 12px;color:#ccc; height: 25px;line-height: 25px;padding:0 2px 0 2px;">{$v.brief}</div>
+              </li>
+              {/volist}
+          </ul>
+        </div>
+      </div>
+      <!-- 最近加入结束 -->
+
+    </div>
+</div>
+
+
+<script>
+    layui.use('element', function(){
+        var $ = layui.$;
+        $('.top_menu').mouseover(function(){
+            $('.top_menu').removeClass('active');
+            $(this).addClass('active');
+        })
+    });
+</script>
+{include file="page/footer" /}

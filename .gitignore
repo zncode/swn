@@ -1,0 +1,6 @@
+.idea
+composer.lock
+#application/database.php
+public/upload
+public/sitemap.xml
+*.log

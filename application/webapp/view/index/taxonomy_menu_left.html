@@ -1,0 +1,40 @@
+<style>
+    body {
+        display: block;
+        margin: 0px;
+    }
+    ul{
+        margin: 0px;
+        -webkit-margin-before: 0px;
+        -webkit-margin-after: 0px;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-start: 0px;
+    }
+    a {
+        color:#000000;
+        text-decoration: none;
+    }
+</style>
+<div>
+    <ul style="margin:0px;">
+    {volist name="menu" id="v" key="k"}
+        {if condition="$right_id eq $v.id"}
+            <li class="menu" style=" list-style-type:none; margin:0px; height:40px; line-height: 40px; background-color: #ffffff; text-align: center;">
+                <a href="{:url('/app/category_right', ['id'=>$v.id])}" target="iframeContent" style="">{$v.name}</a>
+            </li>
+        {else/}
+            <li class="menu" style=" list-style-type:none; margin:0px; height:40px; line-height: 40px; background-color: #f8f8f8; text-align: center;">
+                <a href="{:url('/app/category_right', ['id'=>$v.id])}" target="iframeContent" style="">{$v.name}</a>
+            </li>
+        {/if}
+    {/volist}
+    </ul>
+</div>
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script>
+    $('.menu').click(function(){
+        $('.menu').css('background-color', '#f8f8f8');
+        $(this).css('background-color', '#ffffff');
+    })
+</script>
