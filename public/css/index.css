@@ -183,7 +183,7 @@
 /* 搜索 */
 .search_box {
     position: relative;
-    margin-left:30px;
+    margin-left:100px;
     width: 400px;
     float: left;
     margin-top: 5px;
@@ -203,6 +203,7 @@
 }
 .weather_box{
     float: left;
+    margin-left: 10px;
 }
 .date_box{
     float: left;
