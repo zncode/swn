@@ -143,8 +143,6 @@ class ArticleController extends BaseController
         $upload_ids = $formData['upload_ids'];
         $data = [
             'title'             => $formData['title'],
-            'brief'             => $formData['brief'],
-            'url'               => $formData['url'],
             'taxonomy_id'       => $formData['taxonomy_id'],
             'meta_keyword'      => $formData['meta_keyword'],
             'meta_description'  => $formData['summary'],
@@ -205,7 +203,6 @@ class ArticleController extends BaseController
         $data['info']           = $info;
         $data['goback']         = url('admin/'.$this->url_path.'/list');
         $data['action']         = url('admin/'.$this->url_path.'/edit_submit');
-        $data['get_favicon']    = url('admin/'.$this->url_path.'/get_favicon');
         $data['module_name']    = $this->module_name;
         $data['url_upload']     = url('/upload/image');
         $data['url_upload_editor']          = url('/upload/image_editor',array('category'=>'article'));
@@ -226,8 +223,6 @@ class ArticleController extends BaseController
         //更新内容
         $data = [
             'title'             => $formData['title'],
-            'brief'             => $formData['brief'],
-            'url'               => $formData['url'],
             'taxonomy_id'       => $formData['taxonomy_id'],
             'meta_keyword'      => $formData['meta_keyword'],
             'meta_description'  => $formData['summary'],
