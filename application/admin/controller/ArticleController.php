@@ -144,6 +144,7 @@ class ArticleController extends BaseController
         $data = [
             'title'             => $formData['title'],
             'taxonomy_id'       => $formData['taxonomy_id'],
+            'source'            => $formData['source'],
             'meta_keyword'      => $formData['meta_keyword'],
             'meta_description'  => $formData['summary'],
             'summary'           => $formData['summary'],
@@ -224,6 +225,7 @@ class ArticleController extends BaseController
         $data = [
             'title'             => $formData['title'],
             'taxonomy_id'       => $formData['taxonomy_id'],
+            'source'            => $formData['source'],
             'meta_keyword'      => $formData['meta_keyword'],
             'meta_description'  => $formData['summary'],
             'summary'           => $formData['summary'],

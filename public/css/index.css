@@ -1,5 +1,5 @@
 /* 布局 */
-.body{margin: 0 auto;width: 1200px;margin-top:10px;}
+.body{margin: 0 auto;width: 1000px;margin-top:10px;}
 .body-left{
     float:left;
     width:260px;
@@ -24,7 +24,7 @@
 }
 .top_wrapper{
     margin: 0 auto;
-    width: 1200px;
+    width: 1000px;
     height: 80px;
 }
 .logo{
@@ -33,7 +33,7 @@
     margin-top:0px;
     padding:10px;
 }
-.top_menu_wrapper{float:left;margin-top:25px; margin-left:50px; width: 900px;}
+.top_menu_wrapper{float:left;margin-top:25px; margin-left:50px; width: 730px;}
 .top_menu_wrapper ul{}
 .top_menu_wrapper ul li{float: left; margin: 3px 0px 3px 6px;}
 
@@ -124,6 +124,7 @@
     box-shadow: 0 1px 2px 0 rgba(0,0,0,.2);
     border-radius: 3px;
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 .part_1_title {
@@ -143,9 +144,9 @@
     width: 20%;
 }
 .part_1_content {
-    width: 860px;
-    margin: 10px 0 0 20px;
-    height: 300px;
+    width: 960px;
+    margin: 10px 0 0 10px;
+    height: 200px;
 }
 .part_1_content ul{
     width: 100%;
@@ -183,7 +184,7 @@
 /* 搜索 */
 .search_box {
     position: relative;
-    margin-left:100px;
+    margin-left:120px;
     width: 400px;
     float: left;
     margin-top: 5px;
@@ -218,6 +219,6 @@
 .line_content{float: left; width: 480px;}
 .line_content_title{font-size: 20px;  color: #333; height: 50px; line-height: 50px;}
 .line_content_body{color: #666;height: 100px;}
-.line_content_bottom{float: right;color: #666;margin-right:10px;height: 50px; line-height: 50px;}
+.line_content_bottom{float: right;color: #666;margin-right:10px;height: 40px; line-height: 50px;}
 
 .body_right_block{margin-bottom:20px;}

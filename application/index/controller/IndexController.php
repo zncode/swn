@@ -293,12 +293,15 @@ class IndexController extends BaseController
      */
     public function category_list()
     {
-
         $taxonomy_id    = input('id');
         if($taxonomy_id){
             $where = array('a.delete'=>0, 'taxonomy_id'=>$taxonomy_id);
+
+            $taxonomy = Db::name('taxonomy')->where(array('id'=>$taxonomy_id))->find();
+            $category_name = $taxonomy['name'];
         }else{
             $where = array('a.delete'=>0);
+            $category_name = '最新';
         }
         $pages  = Db::name('article')
             ->alias('a')
@@ -330,7 +333,7 @@ class IndexController extends BaseController
 
         //导航条
         $breadcrumb[] = array('path'=>url('/'),'title'=>'首页');
-        $breadcrumb[] = array('path'=>url('/category'),'title'=>'栏目');
+        $breadcrumb[] = array('path'=>url('/category'),'title'=>$category_name);
 
 
         $data['breadcrumb']         = $this->get_breadcrumb($breadcrumb);
@@ -338,7 +341,7 @@ class IndexController extends BaseController
         $data['list']               = $lists;
         $data['page']               = $page;
         $data['taxonomy_id']        = $taxonomy_id;
-        $data['meta_keyword']       = '栏目';
+        $data['meta_keyword']       = $category_name;
 
         $page_title = '栏目_上网呢 ';
         \think\View::share(['title'=> $page_title]);
@@ -355,7 +358,7 @@ class IndexController extends BaseController
         $id     = input('id');
         $info  = Db::name('article')
             ->alias('a')
-            ->field('a.id,a.title,a.content,a.create_time,a.taxonomy_id,a.meta_keyword,a.meta_description,b.save_path')
+            ->field('a.id,a.title,a.content,a.source,a.create_time,a.taxonomy_id,a.meta_keyword,a.meta_description,b.save_path')
             ->join('upload b', 'a.thumb = b.id', 'left')
             ->where(array('a.id'=>$id))
             ->find();

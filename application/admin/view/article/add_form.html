@@ -61,6 +61,12 @@
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
+                                    <label class="layui-form-label" >来源</label>
+                                    <div class="layui-input-block">
+                                        <input type="input" name="source"  class="layui-input"  placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
                                     <label class="layui-form-label" >关键字</label>
                                     <div class="layui-input-block">
                                         <input type="input" name="meta_keyword" name="" class="layui-input"  placeholder="keyword1, keyword2, keyword3">
@@ -130,6 +136,7 @@
                 var  field = {
                     'title': $("[name='title']").val(),
                     'taxonomy_id': $("[name='taxonomy_id']").val(),
+                    'source': $("[name='source']").val(),
                     'meta_keyword': $("[name='meta_keyword']").val(),
                     'summary': $("[name='summary']").val(),
                     'content': $("[name='content']").val(),
