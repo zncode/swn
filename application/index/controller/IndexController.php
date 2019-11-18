@@ -372,9 +372,12 @@ class IndexController extends BaseController
             $info['reads']    = 50;
         }
 
+        $taxonomy = Db::name('taxonomy')->where(array('id'=>$info['taxonomy_id']))->find();
+        $category_name = $taxonomy['name'];
+
         //导航条
         $breadcrumb[] = array('path'=>url('/'),'title'=>'首页');
-        $breadcrumb[] = array('path'=>url('/category'),'title'=>'栏目');
+        $breadcrumb[] = array('path'=>url('/category'),'title'=>$category_name);
         $breadcrumb[] = array('path'=>'','title'=>$info['title']);
 
 
