@@ -159,5 +159,27 @@ Route::post('admin/system/sitemap_setup_submit', 	'admin/SystemController/sitema
 Route::get('admin/system/site_setup', 			    'admin/SystemController/site_setup');
 Route::post('admin/system/site_setup_submit', 	    'admin/SystemController/site_setup_submit');
 
+//图册管理
+Route::get('admin/gallery/add', 			    'admin/GalleryController/add_form');
+Route::post('admin/gallery/add_submit', 	    'admin/GalleryController/add_form_submit');
+Route::get('admin/gallery/edit', 			    'admin/GalleryController/edit_form');
+Route::post('admin/gallery/edit_submit', 	    'admin/GalleryController/edit_form_submit');
+Route::get('admin/gallery/list', 			    'admin/GalleryController/index');
+Route::get('admin/gallery/info', 			    'admin/GalleryController/info');
+Route::get('admin/gallery/delete', 		        'admin/GalleryController/delete');
+Route::get('admin/gallery/list_data', 		    'admin/GalleryController/index_data');
+
+//图册图片管理
+Route::get('admin/gallery_image/add', 			    'admin/GalleryImageController/add_form');
+Route::post('admin/gallery_image/add_submit', 	    'admin/GalleryImageController/add_form_submit');
+Route::get('admin/gallery_image/add_batch', 	    'admin/GalleryImageController/add_batch_form');
+Route::post('admin/gallery_image/add_batch_submit', 'admin/GalleryImageController/add_batch_form_submit');
+Route::get('admin/gallery_image/edit', 			    'admin/GalleryImageController/edit_form');
+Route::post('admin/gallery_image/edit_submit', 	    'admin/GalleryImageController/edit_form_submit');
+Route::get('admin/gallery_image/list', 			    'admin/GalleryImageController/index');
+Route::get('admin/gallery_image/info', 			    'admin/GalleryImageController/info');
+Route::get('admin/gallery_image/delete', 		    'admin/GalleryImageController/delete');
+Route::get('admin/gallery_image/list_data',         'admin/GalleryImageController/index_data');
+
 
 

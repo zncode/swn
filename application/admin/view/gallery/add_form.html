@@ -1,0 +1,195 @@
+{include file="page/header" /}
+<div class="layui-layout layui-layout-admin">
+    {include file="page/body_top" /}
+    {include file="page/menu" /}
+
+    <div class="layui-body">
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+
+                        <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
+                            <a lay-href="">主页</a><span lay-separator="">/</span>
+                            <a href="{:url('article/list')}" ><cite>{$module_name}列表</cite></a><span lay-separator="">/</span>
+                            <a><cite>{$module_name}添加</cite></a><span lay-separator=""></span>
+                        </div>
+
+                        <div class="go_back"><a href="{$goback}" class="layui-btn layui-btn-sm">返回</a></div>
+
+                        <div class="layui-card-body">
+                            <form id="add_form" action="{$action}" method="post" class="layui-form" enctype="multipart/form-data" >
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">名称</label>
+                                    <div class="layui-input-block">
+                                        <input type="input" name="name" placeholder="" class="layui-input" style="width: 30%">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">频道</label>
+                                    <div class="layui-input-block">
+                                        <div class="layui-input-inline">
+                                            <select name="taxonomy_id" class="layui-select"  placeholder=" - 选择 - " lay-filter="taxonomy" lay-search>
+                                                <option value=""> - 选择 - </option>
+                                                {volist name="tree" id="vo"}
+                                                    <option value="{$vo.id}">{$vo.name}</option>
+                                                {/volist}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">列表图</label>
+                                    <div class="layui-input-block">
+                                        <div style="margin-bottom: 5px;cursor:pointer;" class="thumb_image" ></div>
+                                        <div>
+                                            <button type="button" class="layui-btn" id="image_upload" >
+                                                <i class="layui-icon">&#xe67c;</i>上传图片
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" >状态</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="status" value="1" title="开启" checked="checked" data-filtered="filtered">
+                                        <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><div>开启</div></div>
+                                        <input type="radio" name="status" value="0" title="关闭"  data-filtered="filtered">
+                                        <div class="layui-unselect layui-form-radio "><i class="layui-anim layui-icon"></i><div>关闭</div></div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" >描述</label>
+                                    <div class="layui-input-block">
+                                        <textarea class="layui-textarea" name="description" rows="2" placeholder="" ></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <input type="hidden" value="0" name="upload_id" >
+                                        <button type="submit" class="layui-btn" lay-submit lay-filter="add" id="submit">提交</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {include file="page/body_bottom" /}
+</div>
+
+{include file="page/footer" /}
+
+<script>
+    layui.use(['upload','form'], function(){
+        var form = layui.form;
+        var upload = layui.upload;
+        $ = layui.jquery;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#image_upload'
+            ,url: '{$url_upload}'
+            ,data: {'category':'gallery'}
+            ,size: 2048
+            ,auto: false
+            ,bindAction: '#submit'
+            ,choose: function(obj){
+                obj.preview(function(index, file, result){
+                    var thumb_image = '<img src="'+result+'" width="150px" height="auto" class="thumb_image_picture">';
+                    $('.thumb_image').html(thumb_image);
+                });
+            }
+            ,done: function(res){
+                var code    = res.code;
+                var msg     = res.message;
+                var data    = res.data;
+                if(code == 0){
+                    $("[name='upload_id']").attr('value', data.upload_id);
+                }
+
+                var  field = {
+                    'name': $("[name='name']").val(),
+                    'taxonomy_id': $("[name='taxonomy_id']").val(),
+                    'description': $("[name='description']").val(),
+                    'upload_id': data.upload_id,
+                    'status': $("[name='status']").val(),
+                };
+
+                //提交
+                $.ajax({
+                    url: "{$action}",
+                    type: "post",
+                    data: field,
+                    success:function(result){
+                        var result = JSON.parse(result);
+                        var code = result.code;
+                        var msg  = result.msg;
+                        var data = result.data;
+                        if(code==0){
+                            layer.msg(msg, {
+                                time: 2000,
+                                icon: 16,
+                                shade: 0.2
+                            }, function(){
+                                parent.location.reload();
+                            });
+                        }else{
+                            layer.msg(msg);
+                        }
+                    }
+                })
+            }
+        });
+
+        //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        form.on('submit(add)', function(data){
+            var objFile = $("[name='file']").val();
+            //如果没有上传图片执行
+            if(objFile.length == "") {
+                //提交
+                $.ajax({
+                    url: "{$action}",
+                    type: "post",
+                    data: data.field,
+                    success:function(result){
+                        var result = JSON.parse(result);
+                        var code = result.code;
+                        var msg  = result.msg;
+                        var data = result.data;
+                        if(code==0){
+                            layer.msg(msg, {
+                                time: 2000,
+                                icon: 16,
+                                shade: 0.2
+                            }, function(){
+                                parent.location.reload();
+                            });
+                        }else{
+                            layer.msg(msg);
+                        }
+                    }
+                })
+            }
+            return false;
+        });
+
+        //看大图
+        $('.thumb_image').click(function(){
+            var thumb_image_src = $('.thumb_image_picture').attr('src');
+            layer.open({
+                type: 1,
+                title: false,
+                area: ['auto', 'auto'],
+                content: '<img src="'+thumb_image_src+'">',
+            });
+        });
+
+    });
+
+</script>
