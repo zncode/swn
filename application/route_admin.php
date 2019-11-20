@@ -168,6 +168,7 @@ Route::get('admin/gallery/list', 			    'admin/GalleryController/index');
 Route::get('admin/gallery/info', 			    'admin/GalleryController/info');
 Route::get('admin/gallery/delete', 		        'admin/GalleryController/delete');
 Route::get('admin/gallery/list_data', 		    'admin/GalleryController/index_data');
+Route::post('admin/gallery/ajax_update_field',  'admin/GalleryController/ajax_update_field');
 
 //图册图片管理
 Route::get('admin/gallery_image/add', 			    'admin/GalleryImageController/add_form');
@@ -180,6 +181,6 @@ Route::get('admin/gallery_image/list', 			    'admin/GalleryImageController/inde
 Route::get('admin/gallery_image/info', 			    'admin/GalleryImageController/info');
 Route::get('admin/gallery_image/delete', 		    'admin/GalleryImageController/delete');
 Route::get('admin/gallery_image/list_data',         'admin/GalleryImageController/index_data');
-
+Route::post('admin/gallery_image/ajax_update_field','admin/GalleryImageController/ajax_update_field');
 
 

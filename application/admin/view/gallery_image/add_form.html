@@ -20,16 +20,10 @@
                         <div class="layui-card-body">
                             <form id="add_form" action="{$action}" method="post" class="layui-form" enctype="multipart/form-data" >
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">名称</label>
-                                    <div class="layui-input-block">
-                                        <input type="input" name="name" placeholder="" class="layui-input" style="width: 30%">
-                                    </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">频道</label>
+                                    <label class="layui-form-label">图册</label>
                                     <div class="layui-input-block">
                                         <div class="layui-input-inline">
-                                            <select name="taxonomy_id" class="layui-select"  placeholder=" - 选择 - " lay-filter="taxonomy" lay-search>
+                                            <select name="gallery_id" class="layui-select"  placeholder=" - 选择 - " lay-filter="gallery" lay-search>
                                                 <option value=""> - 选择 - </option>
                                                 {volist name="tree" id="vo"}
                                                     <option value="{$vo.id}">{$vo.name}</option>
@@ -75,7 +69,6 @@
 
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
-                                        <input type="hidden" value="0" name="upload_id" >
                                         <button type="submit" class="layui-btn" lay-submit lay-filter="add" id="submit">提交</button>
                                     </div>
                                 </div>
@@ -100,10 +93,15 @@
         //执行实例
         var uploadInst = upload.render({
             elem: '#image_upload'
-            ,url: '{$url_upload}'
-            ,data: {'category':'gallery'}
+            ,url: '{$action}'
             ,size: 2048
             ,auto: false
+            ,data: {
+                'weight': function(){ return $("[name='weight']").val()},
+                'gallery_id': function(){return $("[name='gallery_id']").val()},
+                'description': function(){return $("[name='description']").val()},
+                'status': function(){return $("[name='status']").val()},
+            }
             ,bindAction: '#submit'
             ,choose: function(obj){
                 obj.preview(function(index, file, result){
@@ -113,43 +111,51 @@
             }
             ,done: function(res){
                 var code    = res.code;
-                var msg     = res.message;
+                var msg     = res.msg;
                 var data    = res.data;
-                if(code == 0){
-                    $("[name='upload_id']").attr('value', data.upload_id);
+                if(code==0){
+                    layer.msg(msg, {
+                        time: 2000,
+                        icon: 16,
+                        shade: 0.2
+                    }, function(){
+                        parent.location.reload();
+                    });
+                }else{
+                    layer.msg(msg);
                 }
 
-                var  field = {
-                    'name': $("[name='name']").val(),
-                    'taxonomy_id': $("[name='taxonomy_id']").val(),
-                    'description': $("[name='description']").val(),
-                    'upload_id': data.upload_id,
-                    'status': $("[name='status']").val(),
-                };
-
-                //提交
-                $.ajax({
-                    url: "{$action}",
-                    type: "post",
-                    data: field,
-                    success:function(result){
-                        var result = JSON.parse(result);
-                        var code = result.code;
-                        var msg  = result.msg;
-                        var data = result.data;
-                        if(code==0){
-                            layer.msg(msg, {
-                                time: 2000,
-                                icon: 16,
-                                shade: 0.2
-                            }, function(){
-                                parent.location.reload();
-                            });
-                        }else{
-                            layer.msg(msg);
-                        }
-                    }
-                })
+//                var  field = {
+//                    'name': $("[name='name']").val(),
+//                    'taxonomy_id': $("[name='taxonomy_id']").val(),
+//                    'description': $("[name='description']").val(),
+//                    'upload_id': data.upload_id,
+//                    'status': $("[name='status']").val(),
+//                };
+//
+//                //提交
+//                $.ajax({
+//                    url: "{$action}",
+//                    type: "post",
+//                    data: field,
+//                    success:function(result){
+//                        var result = JSON.parse(result);
+//                        var code = result.code;
+//                        var msg  = result.msg;
+//                        var data = result.data;
+//                        if(code==0){
+//                            layer.msg(msg, {
+//                                time: 2000,
+//                                icon: 16,
+//                                shade: 0.2
+//                            }, function(){
+//                                parent.location.reload();
+//                            });
+//                        }else{
+//                            layer.msg(msg);
+//                        }
+//                    }
+//                })
             }
         });
 

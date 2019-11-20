@@ -22,7 +22,7 @@ class GalleryController extends BaseController
         $taxonomy            = Db::name('taxonomy')->where(array('delete'=>0))->order("weight asc")->select();
         $tree                = $taxonomyClass->get_taxonomy_tree_wrapper($taxonomyClass->get_taxonomy_tree($taxonomy));
         $data['tree']        = $tree;
-
+        $data['action']         = url('admin/'.$this->url_path.'/ajax_update_field');
         $data['goback']         = url('admin/'.$this->url_path.'/add');
         $data['module_name']    = $this->module_name;
         $data['path']           = $this->url_path;
@@ -154,6 +154,7 @@ class GalleryController extends BaseController
             'taxonomy_id'       => $formData['taxonomy_id'],
             'description'       => $formData['description'],
             'status'            => $formData['status'],
+            'weight'            => $formData['weight'],
             'thumb'             => $formData['upload_id'],
             'create_time'       => time(),
         ];
@@ -222,6 +223,7 @@ class GalleryController extends BaseController
             'description'       => $formData['description'],
             'thumb'             => $formData['upload_id'],
             'status'            => $formData['status'],
+            'weight'            => $formData['weight'],
             'update_time'       => time(),
         ];
         $result = Db::name($this->table)->where(array('id'=>$id))->update($data);
@@ -270,5 +272,32 @@ class GalleryController extends BaseController
             $this->json(array('code'=>0, 'msg'=>'开启完成!', 'data'=>[]));
         }
 
+    }
+
+    /**
+     * 获取图册
+     */
+    function get_gallery(){
+        $gallery = Db::name($this->table)->where(array('delete'=>0,'status'=>1))->order('weight asc, id desc')->select();
+        return $gallery;
+    }
+
+    /**
+     * 更新内容
+     */
+    public function ajax_update_field(){
+        $id      = input('id');
+        $field   = input('field');
+        $content = input('content');
+        if($id){
+            $result = Db::name($this->table)->where(array('id'=>$id))->update([$field=>$content]);
+            if($result){
+                $this->json(array('code'=>0, 'msg'=>'更新完成!', 'data'=>[]));
+            }else{
+                $this->json(array('code'=>1, 'msg'=>'更新失败!', 'data'=>[]));
+            }
+        }else{
+            $this->json(array('code'=>1, 'msg'=>'缺少参数!', 'data'=>[]));
+        }
     }
 }
