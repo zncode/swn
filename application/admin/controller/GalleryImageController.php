@@ -206,7 +206,7 @@ class GalleryImageController extends BaseController
         $gallery                = $galleryClass->get_gallery();
         $data['tree']           = $gallery;
         $data['goback']         = url('admin/'.$this->url_path.'/list');
-        $data['action']         = url('admin/'.$this->url_path.'/add_submit');
+        $data['action']         = url('admin/'.$this->url_path.'/add_batch_submit');
         $data['get_html']       = url('/api/get_html_info');
         $data['module_name']    = $this->module_name;
 
@@ -225,7 +225,9 @@ class GalleryImageController extends BaseController
         $date_dir           = date('Ymd', time());
         $gallery_id         = $formData['gallery_id'];
         $upload_save_path_1 = $upload_save_path.DS.$date_dir.DS;
-
+        if(!$gallery_id){
+            $this->json(array('code'=>1, 'msg'=>'必须选择图册', 'data'=>array()));       
+        }
         if(is_array($file)){
             $file = $file['file'];
         }
@@ -257,8 +259,9 @@ class GalleryImageController extends BaseController
                     'medium'        => '/upload/'.$category.'/'.$date_dir.'/'.$medium_file_name,
                     'thumb'         => '/upload/'.$category.'/'.$date_dir.'/'.$thumb_file_name,
                     'extension'     => $picture['extension'],
-                    'weight'        => $formData['weight'],
-                    'description'   => $formData['description'],
+                    'weight'        => 0,
+                    'delete'        => 0,
+                    'description'   => '',
                     'create_time'   => time(),
                 ];
                 $result = Db::name($this->table)->insert($data);
