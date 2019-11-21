@@ -47,6 +47,7 @@
                                     <th lay-data="{field:'thumb', width:200, templet:'#imageTpl'}">图片</th>
                                     <th lay-data="{field:'name', width:200}">{$module_name}名称</th>
                                     <th lay-data="{field:'taxonomy_name', width:100}">分类</th>
+                                    <th lay-data="{field:'sum', width:100, toolbar: '#sumTpl'}">数量</th>
                                     <th lay-data="{field:'weight', width:100, edit:'text'}">排序</th>
                                     <th lay-data="{field:'status', width:100}">状态</th>
                                     <th lay-data="{field:'create_time', width:200}">创建时间</th>
@@ -63,6 +64,9 @@
 
                             <script type="text/html" id="imageTpl">
                                 <img src="{{d.thumb}}" class="thumb_image_picture" style="cursor:pointer;" lay-event="big_image" />
+                            </script>
+                            <script type="text/html" id="sumTpl">
+                                <a lay-event="sum">{{d.sum}}</a>
                             </script>
                         </div>
                     </div>
@@ -130,6 +134,14 @@
                     area: ['auto', 'auto'],
                     content: '<img src="'+thumb_image_src+'">',
                 });
+            }else if(obj.event === 'sum'){
+//               var url = '{$Think.BASE_PATH}admin/gallery_image/list_data';
+//                var formHtml = "<form action='"+url+"' method='post' target=''>";
+//                formHtml += "<input type='hidden' name='gallery_id' value='\"+data.id+\"' />";
+//                formHtml += "</form>";
+//                var form = $(formHtml);
+//                $(document.body).append(form);
+//                form.submit();
             }
         });
 
@@ -194,6 +206,23 @@
                     }
                 }
             })
+        });
+
+        $(document).off('mousedown','.layui-table-grid-down').
+        on('mousedown','.layui-table-grid-down',function (event) {
+            table._tableTrCurrr = $(this).closest('td');
+        });
+        $(document).off('click','.layui-table-tips-main [lay-event]').
+        on('click','.layui-table-tips-main [lay-event]',function (event) {
+            var elem = $(this);
+            var tableTrCurrr =  table._tableTrCurrr;
+            if(!tableTrCurrr){
+                return;
+            }
+            var layerIndex = elem.closest('.layui-table-tips').attr('times');
+            console.log(layerIndex);
+            layer.close(layerIndex);
+            table._tableTrCurrr.find('[lay-event="' + elem.attr('lay-event') + '"]').first().click();
         });
 
     });

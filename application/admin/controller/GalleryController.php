@@ -80,6 +80,8 @@ class GalleryController extends BaseController
                 $thumb_url = 'http://'.$_SERVER['HTTP_HOST'].$value['save_path'];
             }
             $lists[$key]['thumb'] = $thumb_url;
+            $count = Db::name('gallery_image')->where(array('gallery_id'=>$value['id']))->count();
+            $lists[$key]['sum'] = $count;
         }
         $data = [
             'code'  => 0,
